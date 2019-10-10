@@ -15,9 +15,9 @@ def getNullDescription(data):
 	s = time.time()
 
 	total = getRows(data)
-	data = data.isnull().sum(axis = 0).to_frame("null")
+	data = data.isnull().sum(axis = 0).to_frame("num_null")
 	data.index.name = "colnames"
-	data["not_null"] = total - data["null"]
+	data["not_null"] = total - data["num_null"]
 
 	e = time.time()
 	print("Runtime getNullDescription: ", time.strftime("%H:%M:%S", time.gmtime(e-s)))
