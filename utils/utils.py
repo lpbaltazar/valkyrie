@@ -17,11 +17,26 @@ def convert_string_date(filename):
 	return published_date
 
 
+def readCSVAsArray(filename):
+	df = pd.read_csv(filename, sep=",", header=False).values
+
+	df = df.reshape((len(df),))
+
+	return df
+
+
+def get_day(file):
+	published_date = convert_string_date(published_date)
+
+	return published_date.strftime("%d")
+
+
 def is_logged_in(gigyaid):
-	if not gigyaid:
-		return 1
-	else:
+	if gigyaid == "nan":
 		return 0
+
+	else:
+		return 1
 
 
 def get_article_type(url):
@@ -39,10 +54,16 @@ def get_article_type(url):
 
 
 
-def readCSV(filename):
+def readCSV(filename, cols):
 	start_time = time.time()
 
-	data = pd.read_csv(filename, sep=",")
+	cols = list(cols)
+
+	if not cols:
+		data = pd.read_csv(filename, sep=",")
+
+	else:
+		data = pd.read_csv(filename, sep=",", usecols=cols)
 
 	print("Runtime readCSV: ", time.time() - start_time, "\n")
 
@@ -107,9 +128,9 @@ def toCSV(data, outfile):
 
 	if outfile.isfile():
 		with open(outfile, "a") as csv:
-			csv.write(data)
+			data.to_csv(csv, header=False, index=False)
 
 	else:
-		print("Make initial outfile")
+		data.to_csv(outfile, index=False)
 
 	print("Runtime toCSV: ", time.time() - start_time, "\n")
