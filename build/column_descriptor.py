@@ -11,7 +11,7 @@ import re
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
-from utils.utils import readCSV, readCSVAsArray, get_day, toCSV, mergeDF, convert_string_date, get_week
+from utils.utils import readCSV, readCSVAsArray, get_day, toCSV, mergeDF, convert_string_date
 from utils.statistics import getUniqueValue, getMean, getMedian, getMode, getMin, getMax
 
 
@@ -52,7 +52,6 @@ def cardinal_week_column_description(data, cardinal_cols):
 	res = pd.melt(res, id_vars="colnames", value_vars=["mean", "median", "mode"])
 
 	return res
-
 
 
 def get_weekly_cardinal(data, var):
