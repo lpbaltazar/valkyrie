@@ -18,15 +18,15 @@ def convert_string_date(filename):
 
 
 def readCSVAsArray(filename):
-	df = pd.read_csv(filename, sep=",", header=False).values
-
+	df = pd.read_csv(filename, sep=",", header=None)
+	df = df.values
 	df = df.reshape((len(df),))
 
 	return df
 
 
 def get_day(file):
-	published_date = convert_string_date(published_date)
+	published_date = convert_string_date(file)
 
 	return published_date.strftime("%d")
 
@@ -126,7 +126,7 @@ def concatDF(df):
 def toCSV(data, outfile):
 	start_time = time.time()
 
-	if outfile.isfile():
+	if os.path.isfile(outfile):
 		with open(outfile, "a") as csv:
 			data.to_csv(csv, header=False, index=False)
 
