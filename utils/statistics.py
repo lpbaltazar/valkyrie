@@ -84,6 +84,8 @@ def getMode(data, cols):
 	for col in cols:
 		new_df.loc[col, "mode"] = getModeCol(data[col])
 
+	new_df.index.name = "colnames"
+
 	e = time.time()
 	print("Runtime getMode: ", time.strftime("%H:%M:%S", time.gmtime(e-s)))
 
@@ -105,10 +107,10 @@ def getUniqueValue(data, col):
 
 	data = data.reset_index().groupby(col)["index"].nunique().to_frame("value")
 	data.index.name = "variable"
-	data["colname"] = col
+	data["colnames"] = col
 	data.reset_index(inplace = True)
 
 	e = time.time()
-	print("Runtime getUniqueValue: ", time.strftime("%H:%M:%S", time.gmtime(e-s)))
+#	print("Runtime getUniqueValue: ", time.strftime("%H:%M:%S", time.gmtime(e-s)))
 
-	return data[["colname", "variable", "value"]]
+	return data[["colnames", "variable", "value"]]
